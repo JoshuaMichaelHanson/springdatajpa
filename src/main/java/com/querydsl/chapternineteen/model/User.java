@@ -3,6 +3,7 @@ package com.querydsl.chapternineteen.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -12,6 +13,7 @@ import java.util.Set;
 
 @Entity
 @NoArgsConstructor
+@ToString
 @Table(name = "users")
 public class User {
 
@@ -54,7 +56,9 @@ public class User {
     @Setter
     private boolean active;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @OneToMany(cascade = {CascadeType.ALL})
+    @JoinColumn
     private Set<Bid> bids = new HashSet<>();
 
     public User(String username, String firstName, String lastName) {
